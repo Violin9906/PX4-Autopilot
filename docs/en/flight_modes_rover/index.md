@@ -25,3 +25,10 @@ Selecting any other mode than those listed below will either stop the rover or c
 | ------------------------------- | ----------------------------------------------------------------------- |
 | [Mission](auto.md#mission-mode) | Automatic mode that causes the vehicle to execute a predefined mission. |
 | [Return](auto.md#return-mode)   | Automatic mode that returns the vehicle to the launch position.         |
+
+## Apps & API
+
+| Method                                                          | Description                                                                                                                  |
+| --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| (Recommended) [PX4 ROS 2 Interface](api.md#px4-ros-2-interface) | Register a custom mode and publish [RoverSetpointTypes](../ros2/px4_ros2_control_interface.md#experimental-rover-setpoints). |
+| [ROS 2 Offboard Control](api.md#ros-2-offboard-control)         | Publish to PX4 topics that are specified in [dds_topics.yaml](../middleware/dds_topics.md) (includes rover setpoints).       |
