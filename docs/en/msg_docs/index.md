@@ -22,59 +22,60 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [ConfigOverrides](ConfigOverrides.md) — Configurable overrides by (external) modes or mode executors
 - [Event](Event.md) — Events interface
 - [FixedWingLateralSetpoint](FixedWingLateralSetpoint.md) — Fixed Wing Lateral Setpoint message
-  Used by the fw_lateral_longitudinal_control module
-  At least one of course, airspeed_direction, or lateral_acceleration must be finite.
+Used by the fw_lateral_longitudinal_control module
+At least one of course, airspeed_direction, or lateral_acceleration must be finite.
 - [FixedWingLongitudinalSetpoint](FixedWingLongitudinalSetpoint.md) — Fixed Wing Longitudinal Setpoint message
-  Used by the fw_lateral_longitudinal_control module
-  If pitch_direct and throttle_direct are not both finite, then the controller relies on altitude/height_rate and equivalent_airspeed to control vertical motion.
-  If both altitude and height_rate are NAN, the controller maintains the current altitude.
+Used by the fw_lateral_longitudinal_control module
+If pitch_direct and throttle_direct are not both finite, then the controller relies on altitude/height_rate and equivalent_airspeed to control vertical motion.
+If both altitude and height_rate are NAN, the controller maintains the current altitude.
 - [GotoSetpoint](GotoSetpoint.md) — Position and (optional) heading setpoints with corresponding speed constraints
-  Setpoints are intended as inputs to position and heading smoothers, respectively
-  Setpoints do not need to be kinematically consistent
-  Optional heading setpoints may be specified as controlled by the respective flag
-  Unset optional setpoints are not controlled
-  Unset optional constraints default to vehicle specifications
+Setpoints are intended as inputs to position and heading smoothers, respectively
+Setpoints do not need to be kinematically consistent
+Optional heading setpoints may be specified as controlled by the respective flag
+Unset optional setpoints are not controlled
+Unset optional constraints default to vehicle specifications
 - [HomePosition](HomePosition.md) — GPS home position in WGS84 coordinates.
 - [LateralControlConfiguration](LateralControlConfiguration.md) — Fixed Wing Lateral Control Configuration message
-  Used by the fw_lateral_longitudinal_control module to constrain FixedWingLateralSetpoint messages.
+Used by the fw_lateral_longitudinal_control module to constrain FixedWingLateralSetpoint messages.
 - [LongitudinalControlConfiguration](LongitudinalControlConfiguration.md) — Fixed Wing Longitudinal Control Configuration message
-  Used by the fw_lateral_longitudinal_control module and TECS to constrain FixedWingLongitudinalSetpoint messages
-  and configure the resultant setpoints.
+Used by the fw_lateral_longitudinal_control module and TECS to constrain FixedWingLongitudinalSetpoint messages
+and configure the resultant setpoints.
 - [ManualControlSetpoint](ManualControlSetpoint.md)
 - [ModeCompleted](ModeCompleted.md) — Mode completion result, published by an active mode.
-  The possible values of nav_state are defined in the VehicleStatus msg.
-  Note that this is not always published (e.g. when a user switches modes or on
-  failsafe activation)
+The possible values of nav_state are defined in the VehicleStatus msg.
+Note that this is not always published (e.g. when a user switches modes or on
+failsafe activation)
 - [RegisterExtComponentReply](RegisterExtComponentReply.md)
 - [RegisterExtComponentRequest](RegisterExtComponentRequest.md) — Request to register an external component
 - [TrajectorySetpoint](TrajectorySetpoint.md) — Trajectory setpoint in NED frame
-  Input to PID position controller.
-  Needs to be kinematically consistent and feasible for smooth flight.
-  setting a value to NaN means the state should not be controlled
+Input to PID position controller.
+Needs to be kinematically consistent and feasible for smooth flight.
+setting a value to NaN means the state should not be controlled
 - [UnregisterExtComponent](UnregisterExtComponent.md)
 - [VehicleAngularVelocity](VehicleAngularVelocity.md)
 - [VehicleAttitude](VehicleAttitude.md) — This is similar to the mavlink message ATTITUDE_QUATERNION, but for onboard use
-  The quaternion uses the Hamilton convention, and the order is q(w, x, y, z)
+The quaternion uses the Hamilton convention, and the order is q(w, x, y, z)
 - [VehicleAttitudeSetpoint](VehicleAttitudeSetpoint.md)
 - [VehicleCommand](VehicleCommand.md) — Vehicle Command uORB message. Used for commanding a mission / action / etc.
-  Follows the MAVLink COMMAND_INT / COMMAND_LONG definition
+Follows the MAVLink COMMAND_INT / COMMAND_LONG definition
 - [VehicleCommandAck](VehicleCommandAck.md) — Vehicle Command Ackonwledgement uORB message.
-  Used for acknowledging the vehicle command being received.
-  Follows the MAVLink COMMAND_ACK message definition
+Used for acknowledging the vehicle command being received.
+Follows the MAVLink COMMAND_ACK message definition
 - [VehicleControlMode](VehicleControlMode.md)
 - [VehicleGlobalPosition](VehicleGlobalPosition.md) — Fused global position in WGS84.
-  This struct contains global position estimation. It is not the raw GPS
-  measurement (@see vehicle_gps_position). This topic is usually published by the position
-  estimator, which will take more sources of information into account than just GPS,
-  e.g. control inputs of the vehicle in a Kalman-filter implementation.
+This struct contains global position estimation. It is not the raw GPS
+measurement (@see vehicle_gps_position). This topic is usually published by the position
+estimator, which will take more sources of information into account than just GPS,
+e.g. control inputs of the vehicle in a Kalman-filter implementation.
 - [VehicleLandDetected](VehicleLandDetected.md)
 - [VehicleLocalPosition](VehicleLocalPosition.md) — Fused local position in NED.
-  The coordinate system origin is the vehicle position at the time when the EKF2-module was started.
+The coordinate system origin is the vehicle position at the time when the EKF2-module was started.
 - [VehicleOdometry](VehicleOdometry.md) — Vehicle odometry data. Fits ROS REP 147 for aerial vehicles
 - [VehicleRatesSetpoint](VehicleRatesSetpoint.md)
 - [VehicleStatus](VehicleStatus.md) — Encodes the system state of the vehicle published by commander
 - [VtolVehicleStatus](VtolVehicleStatus.md) — VEHICLE_VTOL_STATE, should match 1:1 MAVLinks's MAV_VTOL_STATE
 - [Wind](Wind.md) — Wind estimate (from EKF2)
+
 
 ## Unversioned Messages
 
@@ -96,7 +97,7 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [CanInterfaceStatus](CanInterfaceStatus.md)
 - [CellularStatus](CellularStatus.md) — Cellular status
 - [CollisionConstraints](CollisionConstraints.md) — Local setpoint constraints in NED frame
-  setting something to NaN means that no limit is provided
+setting something to NaN means that no limit is provided
 - [ControlAllocatorStatus](ControlAllocatorStatus.md)
 - [Cpuload](Cpuload.md)
 - [DatamanRequest](DatamanRequest.md)
@@ -110,7 +111,7 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [DistanceSensorModeChangeRequest](DistanceSensorModeChangeRequest.md)
 - [DronecanNodeStatus](DronecanNodeStatus.md)
 - [Ekf2Timestamps](Ekf2Timestamps.md) — this message contains the (relative) timestamps of the sensor inputs used by EKF2.
-  It can be used for reproducible replay.
+It can be used for reproducible replay.
 - [EscReport](EscReport.md)
 - [EscStatus](EscStatus.md)
 - [EstimatorAidSource1d](EstimatorAidSource1d.md)
@@ -123,7 +124,7 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [EstimatorInnovations](EstimatorInnovations.md)
 - [EstimatorSelectorStatus](EstimatorSelectorStatus.md)
 - [EstimatorSensorBias](EstimatorSensorBias.md) — Sensor readings and in-run biases in SI-unit form. Sensor readings are compensated for static offsets,
-  scale errors, in-run bias and thermal drift (if thermal compensation is enabled and available).
+scale errors, in-run bias and thermal drift (if thermal compensation is enabled and available).
 - [EstimatorStates](EstimatorStates.md)
 - [EstimatorStatus](EstimatorStatus.md)
 - [EstimatorStatusFlags](EstimatorStatusFlags.md)
@@ -131,9 +132,9 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [FailureDetectorStatus](FailureDetectorStatus.md)
 - [FigureEightStatus](FigureEightStatus.md)
 - [FixedWingLateralGuidanceStatus](FixedWingLateralGuidanceStatus.md) — Fixed Wing Lateral Guidance Status message
-  Published by fw_pos_control module to report the resultant lateral setpoints and NPFG debug outputs
+Published by fw_pos_control module to report the resultant lateral setpoints and NPFG debug outputs
 - [FixedWingLateralStatus](FixedWingLateralStatus.md) — Fixed Wing Lateral Status message
-  Published by the fw_lateral_longitudinal_control module to report the resultant lateral setpoint
+Published by the fw_lateral_longitudinal_control module to report the resultant lateral setpoint
 - [FixedWingRunwayControl](FixedWingRunwayControl.md) — Auxiliary control fields for fixed-wing runway takeoff/landing
 - [FlightPhaseEstimation](FlightPhaseEstimation.md)
 - [FollowTarget](FollowTarget.md)
@@ -172,7 +173,7 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [LandingTargetPose](LandingTargetPose.md) — Relative position of precision land target in navigation (body fixed, north aligned, NED) and inertial (world fixed, north aligned, NED) frames
 - [LaunchDetectionStatus](LaunchDetectionStatus.md) — Status of the launch detection state machine (fixed-wing only)
 - [LedControl](LedControl.md) — LED control: control a single or multiple LED's.
-  These are the externally visible LED's, not the board LED's
+These are the externally visible LED's, not the board LED's
 - [LogMessage](LogMessage.md) — A logging message, output with PX4_WARN, PX4_ERR, PX4_INFO
 - [LoggerStatus](LoggerStatus.md)
 - [MagWorkerData](MagWorkerData.md)
@@ -187,7 +188,7 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [MountOrientation](MountOrientation.md)
 - [NavigatorMissionItem](NavigatorMissionItem.md)
 - [NavigatorStatus](NavigatorStatus.md) — Current status of a Navigator mode
-  The possible values of nav_state are defined in the VehicleStatus msg.
+The possible values of nav_state are defined in the VehicleStatus msg.
 - [NeuralControl](NeuralControl.md) — Neural control
 - [NormalizedUnsignedSetpoint](NormalizedUnsignedSetpoint.md)
 - [ObstacleDistance](ObstacleDistance.md) — Obstacle distances in front of the sensor.
@@ -211,7 +212,7 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [PositionControllerStatus](PositionControllerStatus.md)
 - [PositionSetpoint](PositionSetpoint.md) — this file is only used in the position_setpoint triple as a dependency
 - [PositionSetpointTriplet](PositionSetpointTriplet.md) — Global position setpoint triplet in WGS84 coordinates.
-  This are the three next waypoints (or just the next two or one).
+This are the three next waypoints (or just the next two or one).
 - [PowerButtonState](PowerButtonState.md) — power button state notification message
 - [PowerMonitor](PowerMonitor.md) — power monitor message
 - [PpsCapture](PpsCapture.md)
@@ -229,10 +230,10 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [RoverPositionSetpoint](RoverPositionSetpoint.md) — Rover Position Setpoint
 - [RoverRateSetpoint](RoverRateSetpoint.md) — Rover Rate setpoint
 - [RoverRateStatus](RoverRateStatus.md) — Rover Rate Status
+- [RoverSpeedSetpoint](RoverSpeedSetpoint.md) — Rover Speed Setpoint
+- [RoverSpeedStatus](RoverSpeedStatus.md) — Rover Velocity Status
 - [RoverSteeringSetpoint](RoverSteeringSetpoint.md) — Rover Steering setpoint
 - [RoverThrottleSetpoint](RoverThrottleSetpoint.md) — Rover Throttle setpoint
-- [RoverVelocitySetpoint](RoverVelocitySetpoint.md) — Rover Velocity Setpoint
-- [RoverVelocityStatus](RoverVelocityStatus.md) — Rover Velocity Status
 - [Rpm](Rpm.md)
 - [RtlStatus](RtlStatus.md)
 - [RtlTimeEstimate](RtlTimeEstimate.md)
@@ -242,12 +243,12 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [SensorAirflow](SensorAirflow.md)
 - [SensorBaro](SensorBaro.md)
 - [SensorCombined](SensorCombined.md) — Sensor readings in SI-unit form.
-  These fields are scaled and offset-compensated where possible and do not
-  change with board revisions and sensor updates.
+These fields are scaled and offset-compensated where possible and do not
+change with board revisions and sensor updates.
 - [SensorCorrection](SensorCorrection.md) — Sensor corrections in SI-unit form for the voted sensor
 - [SensorGnssRelative](SensorGnssRelative.md) — GNSS relative positioning information in NED frame. The NED frame is defined as the local topological system at the reference station.
 - [SensorGps](SensorGps.md) — GPS position in WGS84 coordinates.
-  the field 'timestamp' is for the position & velocity (microseconds)
+the field 'timestamp' is for the position & velocity (microseconds)
 - [SensorGyro](SensorGyro.md)
 - [SensorGyroFft](SensorGyroFft.md)
 - [SensorGyroFifo](SensorGyroFifo.md)
@@ -255,11 +256,11 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [SensorMag](SensorMag.md)
 - [SensorOpticalFlow](SensorOpticalFlow.md)
 - [SensorPreflightMag](SensorPreflightMag.md) — Pre-flight sensor check metrics.
-  The topic will not be updated when the vehicle is armed
+The topic will not be updated when the vehicle is armed
 - [SensorSelection](SensorSelection.md) — Sensor ID's for the voted sensors output on the sensor_combined topic.
-  Will be updated on startup of the sensor module and when sensor selection changes
+Will be updated on startup of the sensor module and when sensor selection changes
 - [SensorUwb](SensorUwb.md) — UWB distance contains the distance information measured by an ultra-wideband positioning system,
-  such as Pozyx or NXP Rddrone.
+such as Pozyx or NXP Rddrone.
 - [SensorsStatus](SensorsStatus.md) — Sensor check metrics. This will be zero for a sensor that's primary or unpopulated.
 - [SensorsStatusImu](SensorsStatusImu.md) — Sensor check metrics. This will be zero for a sensor that's primary or unpopulated.
 - [SystemPower](SystemPower.md)
@@ -270,26 +271,26 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [TiltrotorExtraControls](TiltrotorExtraControls.md)
 - [TimesyncStatus](TimesyncStatus.md)
 - [TrajectorySetpoint6dof](TrajectorySetpoint6dof.md) — Trajectory setpoint in NED frame
-  Input to position controller.
+Input to position controller.
 - [TransponderReport](TransponderReport.md)
 - [TuneControl](TuneControl.md) — This message is used to control the tunes, when the tune_id is set to CUSTOM
-  then the frequency, duration are used otherwise those values are ignored.
+then the frequency, duration are used otherwise those values are ignored.
 - [UavcanParameterRequest](UavcanParameterRequest.md) — UAVCAN-MAVLink parameter bridge request type
 - [UavcanParameterValue](UavcanParameterValue.md) — UAVCAN-MAVLink parameter bridge response type
 - [UlogStream](UlogStream.md) — Message to stream ULog data from the logger. Corresponds to the LOGGING_DATA
-  mavlink message
+mavlink message
 - [UlogStreamAck](UlogStreamAck.md) — Ack a previously sent ulog_stream message that had
-  the NEED_ACK flag set
+the NEED_ACK flag set
 - [VehicleAcceleration](VehicleAcceleration.md)
-- [VehicleAirData](VehicleAirData.md)
+- [VehicleAirData](VehicleAirData.md) — Vehicle air data
 - [VehicleAngularAccelerationSetpoint](VehicleAngularAccelerationSetpoint.md)
 - [VehicleConstraints](VehicleConstraints.md) — Local setpoint constraints in NED frame
-  setting something to NaN means that no limit is provided
+setting something to NaN means that no limit is provided
 - [VehicleImu](VehicleImu.md) — IMU readings in SI-unit form.
 - [VehicleImuStatus](VehicleImuStatus.md)
 - [VehicleLocalPositionSetpoint](VehicleLocalPositionSetpoint.md) — Local position setpoint in NED frame
-  Telemetry of PID position controller to monitor tracking.
-  NaN means the state was not controlled
+Telemetry of PID position controller to monitor tracking.
+NaN means the state was not controlled
 - [VehicleMagnetometer](VehicleMagnetometer.md)
 - [VehicleOpticalFlow](VehicleOpticalFlow.md) — Optical flow in XYZ body frame in SI units.
 - [VehicleOpticalFlowVel](VehicleOpticalFlowVel.md)
@@ -303,9 +304,9 @@ Graphs showing how these are used [can be found here](../middleware/uorb_graph.m
 - [ArmingCheckReplyV0](ArmingCheckReplyV0.md)
 - [BatteryStatusV0](BatteryStatusV0.md) — Battery status
 - [EventV0](EventV0.md) — this message is required here in the msg_old folder because other msg are depending on it
-  Events interface
+Events interface
 - [HomePositionV0](HomePositionV0.md) — GPS home position in WGS84 coordinates.
 - [VehicleAttitudeSetpointV0](VehicleAttitudeSetpointV0.md)
 - [VehicleLocalPositionV0](VehicleLocalPositionV0.md) — Fused local position in NED.
-  The coordinate system origin is the vehicle position at the time when the EKF2-module was started.
+The coordinate system origin is the vehicle position at the time when the EKF2-module was started.
 - [VehicleStatusV0](VehicleStatusV0.md) — Encodes the system state of the vehicle published by commander
