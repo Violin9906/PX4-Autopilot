@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (c) 2019 PX4 Development Team. All rights reserved.
+ *   Copyright (C) 2025 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,62 +30,32 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  ****************************************************************************/
+#pragma once
 
-#include "PX4Rangefinder.hpp"
+#include <stdint.h>
+#include <uORB/topics/gpio_in.h>
+#include <uORB/SubscriptionCallback.hpp>
 
-#include <lib/drivers/device/Device.hpp>
-
-using namespace time_literals;
-
-PX4Rangefinder::PX4Rangefinder(const uint32_t device_id, const uint8_t device_orientation)
+class CallbackHandler : public uORB::SubscriptionCallback
 {
-	set_device_id(device_id);
-	set_orientation(device_orientation);
-	set_rangefinder_type(distance_sensor_s::MAV_DISTANCE_SENSOR_LASER);
-	set_mode(distance_sensor_s::MODE_UNKNOWN);
-}
+public:
+	uint32_t dev_id;
+	uint16_t input{0};
 
-PX4Rangefinder::~PX4Rangefinder()
-{
-	_distance_sensor_pub.unadvertise();
-}
+	CallbackHandler(orb_id_t id) : uORB::SubscriptionCallback(id) {}
+	virtual ~CallbackHandler() {}
 
-void PX4Rangefinder::set_device_type(uint8_t device_type)
-{
-	// current DeviceStructure
-	union device::Device::DeviceId device_id;
-	device_id.devid = _distance_sensor_pub.get().device_id;
+	void call() override
+	{
+		px4::msg::GpioIn new_input;
 
-	// update to new device type
-	device_id.devid_s.devtype = device_type;
+		for (int i = 0; i < new_input.MAX_INSTANCES; i++) {
+			ChangeInstance(i);
 
-	// copy back to report
-	_distance_sensor_pub.get().device_id = device_id.devid;
-}
-
-void PX4Rangefinder::set_orientation(const uint8_t device_orientation)
-{
-	_distance_sensor_pub.get().orientation = device_orientation;
-}
-
-void PX4Rangefinder::update(const hrt_abstime &timestamp_sample, const float distance, const int8_t quality, const float *q, uint8_t q_len)
-{
-	distance_sensor_s &report = _distance_sensor_pub.get();
-	report.timestamp = timestamp_sample;
-	report.current_distance = distance;
-	report.signal_quality = quality;
-
-	// if quality is unavailable (-1) set to 0 if distance is outside bounds
-	if (quality < 0) {
-		if ((distance < report.min_distance) || (distance > report.max_distance)) {
-			report.signal_quality = 0;
+			if (update(&new_input) && new_input.device_id == dev_id) {
+				input = new_input.state;
+				break;
+			}
 		}
 	}
-
-	// Update the quaternion in the sample update
-	if (q != nullptr) {
-		memcpy(report.q, q, sizeof(float) * q_len);
-	}
-
-	_distance_sensor_pub.update();
-}
+};

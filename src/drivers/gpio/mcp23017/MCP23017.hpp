@@ -1,6 +1,6 @@
 /****************************************************************************
  *
- *   Copyright (c) 2019 PX4 Development Team. All rights reserved.
+ *   Copyright (C) 2025 PX4 Development Team. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,62 +30,46 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *
  ****************************************************************************/
-
-#include "PX4Rangefinder.hpp"
-
-#include <lib/drivers/device/Device.hpp>
+#pragma once
+#include <lib/drivers/mcp_common/MCP.hpp>
 
 using namespace time_literals;
 
-PX4Rangefinder::PX4Rangefinder(const uint32_t device_id, const uint8_t device_orientation)
+class MCP23017 : public MCP230XX
 {
-	set_device_id(device_id);
-	set_orientation(device_orientation);
-	set_rangefinder_type(distance_sensor_s::MAV_DISTANCE_SENSOR_LASER);
-	set_mode(distance_sensor_s::MODE_UNKNOWN);
-}
+public:
+	MCP23017(const I2CSPIDriverConfig &config);
 
-PX4Rangefinder::~PX4Rangefinder()
-{
-	_distance_sensor_pub.unadvertise();
-}
+private:
+	enum class
+	Register : uint8_t {
+		IODIRA   = 0x00,
+		IODIRB   = 0x01,
+		IPOLA    = 0x02,
+		IPOLB    = 0x03,
+		GPINTENA = 0x04,
+		GPINTENB = 0x05,
+		DEFVALA  = 0x06,
+		DEFVALB  = 0x07,
+		INTCONA  = 0x08,
+		INTCONB  = 0x09,
+		IOCONA   = 0x0a,
+		IOCONB   = 0x0b,
+		GPPUA    = 0x0c,
+		GPPUB    = 0x0d,
+		INTFA    = 0x0e,
+		INTFB    = 0x0f,
+		INTCAPA  = 0x10,
+		INTCAPB  = 0x11,
+		GPIOA    = 0x12,
+		GPIOB    = 0x13,
+		OLATA    = 0x14,
+		OLATB    = 0x15
+	};
 
-void PX4Rangefinder::set_device_type(uint8_t device_type)
-{
-	// current DeviceStructure
-	union device::Device::DeviceId device_id;
-	device_id.devid = _distance_sensor_pub.get().device_id;
-
-	// update to new device type
-	device_id.devid_s.devtype = device_type;
-
-	// copy back to report
-	_distance_sensor_pub.get().device_id = device_id.devid;
-}
-
-void PX4Rangefinder::set_orientation(const uint8_t device_orientation)
-{
-	_distance_sensor_pub.get().orientation = device_orientation;
-}
-
-void PX4Rangefinder::update(const hrt_abstime &timestamp_sample, const float distance, const int8_t quality, const float *q, uint8_t q_len)
-{
-	distance_sensor_s &report = _distance_sensor_pub.get();
-	report.timestamp = timestamp_sample;
-	report.current_distance = distance;
-	report.signal_quality = quality;
-
-	// if quality is unavailable (-1) set to 0 if distance is outside bounds
-	if (quality < 0) {
-		if ((distance < report.min_distance) || (distance > report.max_distance)) {
-			report.signal_quality = 0;
-		}
-	}
-
-	// Update the quaternion in the sample update
-	if (q != nullptr) {
-		memcpy(report.q, q, sizeof(float) * q_len);
-	}
-
-	_distance_sensor_pub.update();
-}
+	int get_olat(int bank, uint8_t *addr) override;
+	int get_gppu(int bank, uint8_t *addr) override;
+	int get_iodir(int bank, uint8_t *addr) override;
+	int get_gpio(int bank, uint8_t *addr) override;
+	int get_probe_reg(uint8_t *addr) override;
+};
