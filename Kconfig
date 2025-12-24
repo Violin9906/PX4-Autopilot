@@ -13,6 +13,8 @@ menu "Toolchain"
         default PLATFORM_NUTTX
         config PLATFORM_NUTTX
             bool "nuttx"
+        config PLATFORM_RTTHREAD
+            bool "rtthread"
         config PLATFORM_POSIX
             bool "posix"
         config PLATFORM_QURT
@@ -24,6 +26,7 @@ menu "Toolchain"
     config BOARD_PLATFORM
         string
         default "nuttx" if PLATFORM_NUTTX
+        default "rtthread" if PLATFORM_RTTHREAD
         default "posix" if PLATFORM_POSIX
         default "qurt" if PLATFORM_QURT
         default "ros2" if PLATFORM_ROS2
@@ -206,7 +209,7 @@ source "src/examples/Kconfig"
 endmenu
 
 menu "platforms"
-depends on PLATFORM_QURT || PLATFORM_POSIX
+depends on PLATFORM_QURT || PLATFORM_POSIX || PLATFORM_RTTHREAD
 source "platforms/common/Kconfig"
 endmenu
 
